@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Chatbot</title>
+
+    <!-- Bootstrap & Icons -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <style>
+        body {
+            background: #f4f7f9;
+        }
+
+        .chat {
+            margin-top: 40px;
+        }
+
+        .card {
+            height: 600px;
+            border-radius: 10px;
+        }
+
+        .card-header {
+            background: #0d6efd;
+            color: white;
+        }
+
+        .msg_card_body {
+            overflow-y: auto;
+            height: 430px;
+            padding: 15px;
+        }
+
+        .msg_cotainer,
+        .msg_cotainer_send {
+            padding: 10px 15px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            max-width: 75%;
+            word-wrap: break-word;
+        }
+
+        .msg_cotainer {
+            background: #e4e6eb;
+            color: #000;
+        }
+
+        .msg_cotainer_send {
+            background: #0d6efd;
+            color: white;
+            margin-left: auto;
+        }
+
+        .msg_sources {
+            font-size: 12px;
+            margin-top: 5px;
+            color: #555;
+        }
+
+        .card-footer {
+            border-top: 1px solid #ddd;
+        }
+
+        .type_msg {
+            border-radius: 20px;
+        }
+
+        .send_btn {
+            border-radius: 50%;
+            background: #0d6efd;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container-fluid h-100">
+    <div class="row justify-content-center h-100">
+        <div class="col-md-8 col-xl-6 chat">
+            <div class="card">
+
+                <!-- Header -->
+                <div class="card-header">
+                    <h5 class="mb-0">🩺 Medical Chatbot</h5>
+                    <small>General medical information only (not a doctor)</small>
+                </div>
+
+                <!-- Messages -->
+                <div id="messageFormeight" class="card-body msg_card_body"></div>
+
+                <!-- Input -->
+                <div class="card-footer">
+                    <form id="messageArea" class="input-group">
+                        <input type="text" id="text" name="msg"
+                               placeholder="Ask a medical question..."
+                               autocomplete="off"
+                               class="form-control type_msg"
+                               required>
+                        <div class="input-group-append">
+                            <button type="submit" class="input-group-text send_btn">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function () {
+
+    $("#messageArea").on("submit", function (event) {
+        event.preventDefault();
+
+        const msg = $("#text").val().trim();
+        if (!msg) return;
+
+        $("#text").val("");
+
+        // User message
+        const userHtml = `
+            <div class="d-flex justify-content-end">
+                <div class="msg_cotainer_send">${msg}</div>
+            </div>`;
+        $("#messageFormeight").append(userHtml);
+
+        // Scroll down
+        $("#messageFormeight").scrollTop($("#messageFormeight")[0].scrollHeight);
+
+        // AJAX request
+        $.ajax({
+            type: "POST",
+            url: "/get",
+            data: { msg: msg }
+        }).done(function (data) {
+
+            // Convert line breaks to <br>
+            const formatted = data.replace(/\n/g, "<br>");
+
+            const botHtml = `
+                <div class="d-flex justify-content-start">
+                    <div class="msg_cotainer">
+                        ${formatted}
+                    </div>
+                </div>`;
+
+            $("#messageFormeight").append(botHtml);
+            $("#messageFormeight").scrollTop($("#messageFormeight")[0].scrollHeight);
+        });
+    });
+
+});
+</script>
+
+</body>
+</html>

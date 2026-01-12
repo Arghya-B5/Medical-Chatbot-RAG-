@@ -1,0 +1,24 @@
+# Core
+python-dotenv==1.1.0
+flask==3.1.1
+
+# LangChain (keep versions aligned)
+langchain==0.3.26
+langchain-community==0.3.26
+langchain-huggingface==0.1.2
+
+# Hugging Face
+
+sentence-transformers==4.1.0
+# huggingface-hub==0.25.1
+# accelerate==0.34.2
+
+# Vector DB (optional – choose one)
+langchain-pinecone==0.2.8
+pinecone-client>=3.0.0
+
+# Document loading
+pypdf==5.6.1
+
+# ML backend
+# torch>=2.1.0

@@ -1,4 +1,4 @@
-# Core
+# Core[conda activate m2_bot]
 python-dotenv==1.1.0
 flask==3.1.1
 
@@ -22,3 +22,25 @@ pypdf==5.6.1
 
 # ML backend
 # torch>=2.1.0
+
+
+
+# # LangChain
+# langchain==0.3.26
+# langchain-core==0.3.81
+
+# langchain-huggingface==0.1.2
+
+# # Hugging Face
+# huggingface-hub==0.25.1
+# transformers==4.46.3
+# sentence-transformers==3.2.1
+# tokenizers==0.20.3
+# accelerate==0.34.2
+
+
+##pip install langchain-huggingface==0.1.2
+
+
+# ML Backend
+torch>=2.1.0

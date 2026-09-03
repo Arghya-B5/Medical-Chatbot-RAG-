@@ -1,3 +1,6 @@
 data
 .env
-researc
+research
+mlflow.db
+.vscode
+keys
